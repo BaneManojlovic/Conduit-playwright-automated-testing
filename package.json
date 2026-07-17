@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "This repo contains Automated testing framework for testing conduit web application. The course-code is written in TypeScript with additional support for different frameworks and libraries used in this project.",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "bddgen && playwright test"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/BaneManojlovic/Conduit-playwright-automated-testing.git"
@@ -17,7 +19,9 @@
   },
   "homepage": "https://github.com/BaneManojlovic/Conduit-playwright-automated-testing#readme",
   "devDependencies": {
+    "@cucumber/cucumber": "^12.9.0",
     "@playwright/test": "^1.61.1",
-    "@types/node": "^26.1.1"
+    "@types/node": "^26.1.1",
+    "playwright-bdd": "^9.2.0"
   }
 }
