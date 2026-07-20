@@ -3,6 +3,6 @@
     "features/**/*.feature"
   ],
   "cucumber.glue": [
-    "features/steps/**/*.ts"
+    "steps/**/*.ts"
   ]
 }
