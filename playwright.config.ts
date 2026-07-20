@@ -3,8 +3,8 @@ import { defineBddConfig } from 'playwright-bdd';
 
 // Configure paths for your BDD feature files and TypeScript steps
 const testDir = defineBddConfig({
-  features: 'features/**/*.feature',
-  steps: 'features/steps/**/*.ts',
+  features: 'features/ui/**/*.feature',
+  steps: 'steps/ui/**/*.ts',
 });
 
 /**
