@@ -18,7 +18,6 @@ Then('user is redirected to Sign up page', async({ page }) => {
     await expect(page.getByRole('heading', { name: 'Sign up' })).toBeVisible();
 });
 
-
 Given('user is on the Sign up page', async({ page }) => {
     await page.goto('https://conduit.bondaracademy.com/register');
 });
@@ -42,6 +41,15 @@ Then('sign up button is disabled', async({ page }) => {
     await expect(page.getByRole('button', { name: 'Sign up' })).toBeDisabled();
 });
 
+Given('user fill in credentials with valid data', async({ page }) => {
+    await page.getByRole('textbox', { name: 'Username' }).fill('Bane01');
+    await page.getByRole('textbox', { name: 'Email' }).fill('test01@gmail.com');
+    await page.getByRole('textbox', { name: 'Password' }).fill('Test123!');
+});
+
+Then('sign up button is enabled', async({ page }) => {
+    await expect(page.getByRole('button', { name: 'Sign up' })).toBeEnabled();
+});
 
 
 

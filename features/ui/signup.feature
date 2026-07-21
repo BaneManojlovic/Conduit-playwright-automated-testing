@@ -18,10 +18,10 @@ Scenario: Disabled Sign up button
     And input fields for credentials are empty
     Then sign up button is disabled
 
-# Scenario: Enabled Sign up button
-#     Given 
-#     When
-#     Then 
+Scenario: Enabled Sign up button
+    Given user is on the Sign up page
+    And user fill in credentials with valid data
+    Then sign up button is enabled
 
 
 # Scenario: User successfully Sign Up with valid credentials
