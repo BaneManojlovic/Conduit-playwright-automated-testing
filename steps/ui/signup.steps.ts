@@ -1,5 +1,6 @@
 import { createBdd } from 'playwright-bdd';
 import { expect } from '@playwright/test';
+import { PageManager } from '../../page-objects/pageManager';
 
 const { Given, When, Then } = createBdd();
 
@@ -51,20 +52,63 @@ Then('sign up button is enabled', async({ page }) => {
     await expect(page.getByRole('button', { name: 'Sign up' })).toBeEnabled();
 });
 
+When('user enter credentials with invalid username value', async({ page }) => {
+    const pageManager = new PageManager(page);
+    await pageManager.onSignUpPage().fillInUserCredentials('x', 'tems@gmail.com', 'Test123!');
+});
 
+When('user enter credentials with invalid email value', async({ page }) => {
+    const pageManager = new PageManager(page);
+    await pageManager.onSignUpPage().fillInUserCredentials('Test User', 'x', 'Test123!');
+});
+
+When('user enter credentials with invalid password value', async({ page }) => {
+    const pageManager = new PageManager(page);
+    await pageManager.onSignUpPage().fillInUserCredentials('Test User', 'test@gmail.com', 'x');
+});
+
+When('user enter credentials with all invalid values', async({ page }) => {
+    const pageManager = new PageManager(page);
+    await pageManager.onSignUpPage().fillInUserCredentials('x', 'x', 'x');
+});
+
+When('user click sign up button', async({ page }) => {
+    const pageManager = new PageManager(page);
+    await pageManager.onSignUpPage().submit();
+});
+
+Then('error message about invalid username is shown', async({ page }) => {
+    const pageManager = new PageManager(page);
+    const errorMessage = await pageManager.onSignUpPage().getErrorMessage();
+    expect(errorMessage[0]).toEqual('username is too short (minimum is 3 characters)');
+});
+
+Then('error message about invalid email is shown', async({ page }) => {
+    const pageManager = new PageManager(page);
+    const errorMessage = await pageManager.onSignUpPage().getErrorMessage();
+    expect(errorMessage[0]).toEqual('email is invalid');
+});
+
+Then('error message about invalid password is shown', async({ page }) => {
+    const pageManager = new PageManager(page);
+    const errorMessage = await pageManager.onSignUpPage().getErrorMessage();
+    expect(errorMessage[0]).toEqual('password is too short (minimum is 8 characters)');
+});
+
+Then('all three error messages are shown', async({ page }) => {
+    const pageManager = new PageManager(page);
+    const errorMessage = await pageManager.onSignUpPage().getErrorMessage();
+    expect(errorMessage[0]).toEqual('email is invalid');
+    expect(errorMessage[1]).toEqual('username is too short (minimum is 3 characters)');
+    expect(errorMessage[2]).toEqual('password is too short (minimum is 8 characters)');
+});
 
 
 // Given('', async({ }) => {
 
 // });
 
-// When('', async({ }) => {
 
-// });
-
-// Then('', async({ }) => {
-
-// });
 
 // Given('', async({ }) => {
 
