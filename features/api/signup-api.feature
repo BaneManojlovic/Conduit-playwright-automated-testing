@@ -18,14 +18,14 @@ Scenario: Successfull sign up via API using valid credentials
     Then the response contains a new user token
 
 Scenario: Error returned for all invalid credentials together
-    Given
-    When
-    Then
+    When user try to signs up via API with all invalid credentials
+    And the response status is 422
+    Then the response contains error messages
 
 Scenario: Error returned for invalid username
-    Given
-    When
-    Then
+    When user try to signs up via API with invalid username
+    And the response status is 422
+    Then the response contains error invalid username message
 
 Scenario: Error returned for invalid email
     Given
