@@ -24,10 +24,10 @@ Scenario: Enabled Sign up button
     Then sign up button is enabled
 
 
-# Scenario: User successfully Sign Up with valid credentials
-#     Given 
-#     When
-#     Then 
+Scenario: User successfully Sign Up with valid credentials
+    When user enters valid signup credentials
+    And user click sign up button
+    Then user is redirected to home page and have username displayed
 
 
 Scenario: User see error message for invalid Username
@@ -52,14 +52,3 @@ Scenario: User see all error messages for all invalid credentials together
     When user enter credentials with all invalid values
     And user click sign up button
     Then all three error messages are shown
-
-
-# Scenario: User see error if signing up with a username that's already taken
-#     Given 
-#     When
-#     Then 
-
-# Scenario: User see error if signing up with a email that's already taken
-#     Given 
-#     When
-#     Then

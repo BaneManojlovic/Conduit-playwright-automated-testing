@@ -4,6 +4,9 @@ import { PageManager } from '../../page-objects/pageManager';
 
 const { Given, When, Then } = createBdd();
 
+let username: string;
+let email: string;
+
 // Playwright Test Steps
 
 Given('user is on home page', async({ page }) => {
@@ -103,21 +106,19 @@ Then('all three error messages are shown', async({ page }) => {
     expect(errorMessage[2]).toEqual('password is too short (minimum is 8 characters)');
 });
 
+When('user enters valid signup credentials', async({ page }) => {
+    const pageManager = new PageManager(page);
+    const uniqueId = Date.now();
+    username = `user${uniqueId}`;
+    email  = `user${uniqueId}@example.com`;
 
-// Given('', async({ }) => {
+    await pageManager.onSignUpPage().fillInUserCredentials(
+        username, 
+        email, 
+        'Test123!');
+});
 
-// });
-
-
-
-// Given('', async({ }) => {
-
-// });
-
-// When('', async({ }) => {
-
-// });
-
-// Then('', async({ }) => {
-
-// });
+Then('user is redirected to home page and have username displayed', async({ page }) => {
+    const pageManager = new PageManager(page);
+    await pageManager.onHeader().usernamePresent(username);
+});
