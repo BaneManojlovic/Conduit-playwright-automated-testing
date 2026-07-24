@@ -2,6 +2,7 @@ import { createBdd } from 'playwright-bdd';
 import { expect, APIResponse } from '@playwright/test';
 import { AuthApiClient } from '../../api-clients/authApiClient';
 
+
 const { Given, When, Then } = createBdd();
 
 let response: APIResponse;
@@ -14,30 +15,31 @@ When('user signs up via API with valid credentials', async ({ request }) => {
   const uniqueId = Date.now();
   username = `baki${uniqueId}`;
   email = `baki${uniqueId}@gmail.com`;
-  response = await apiClient.signUp(
+  response = await apiClient.signUp({ 
     username, 
     email, 
-    'Test123!');
+    password: 'Test123!'});
   responseBody =  await response.json();
 });
 
 When('user signs up via API with credentials with repeated username', async ({ request }) => {
   const apiClient = new AuthApiClient(request);
   const uniqueId = Date.now();
-  response = await apiClient.signUp(
-    username, 
-    `baki${uniqueId}@gmail.com`, 
-    'Test123!');
+  response = await apiClient.signUp({ 
+    username: username, 
+    email:`baki${uniqueId}@gmail.com`, 
+    password:'Test123!'});
   responseBody =  await response.json();
 });
 
 When('user signs up via API with credentials with repeated email', async ({ request }) => {
   const apiClient = new AuthApiClient(request);
   const uniqueId = Date.now();
-  response = await apiClient.signUp(
-    `baki${uniqueId}`, 
-    email, 
-    'Test123!');
+  response = await apiClient.signUp({
+    username: `baki${uniqueId}`,
+    email,
+    password: 'Test123!'
+  });
   responseBody =  await response.json();
 });
 
@@ -52,10 +54,11 @@ Then('the response contains a new user token', async ({}) => {
 When('user try to signs up via API with all invalid credentials', async ({ request }) => {
   const apiClient = new AuthApiClient(request);
   const uniqueId = Date.now();
-  response = await apiClient.signUp(
-    `x`, 
-    `x`, 
-    'x');
+  response = await apiClient.signUp({
+    username: `x`,
+    email: `x`,
+    password: `x`
+  });
   responseBody =  await response.json();
   console.log(response);
 });
@@ -71,10 +74,11 @@ Then('the response contains error messages', async ({}) => {
 When('user try to signs up via API with invalid username', async ({ request }) => {
   const apiClient = new AuthApiClient(request);
   const uniqueId = Date.now();
-  response = await apiClient.signUp(
-    `x`, 
-    `baki${uniqueId}@gmail.com`, 
-    'Test123!');
+  response = await apiClient.signUp({
+    username: `x`,
+    email: `baki${uniqueId}@gmail.com`,
+    password: 'Test123!'
+  });
   responseBody =  await response.json();
   console.log(response);
 });
@@ -86,10 +90,11 @@ Then('the response contains error invalid username message', async ({}) => {
 When('user try to signs up via API with invalid email', async ({ request }) => {
   const apiClient = new AuthApiClient(request);
   const uniqueId = Date.now();
-  response = await apiClient.signUp(
-    `baki${uniqueId}`, 
-    `x`, 
-    'Test123!');
+  response = await apiClient.signUp({
+    username: `baki${uniqueId}`,
+    email: `x`,
+    password: 'Test123!'
+  });
   responseBody =  await response.json();
   console.log(response);
 });
@@ -101,10 +106,11 @@ Then('the response contains error invalid email message', async ({}) => {
 When('user try to signs up via API with invalid password', async ({ request }) => {
   const apiClient = new AuthApiClient(request);
   const uniqueId = Date.now();
-  response = await apiClient.signUp(
-    `baki${uniqueId}`, 
-    `baki${uniqueId}@gmail.com`, 
-    'x');
+  response = await apiClient.signUp({
+    username: `baki${uniqueId}`,
+    email: `baki${uniqueId}@gmail.com`,
+    password: 'x'
+  });
   responseBody =  await response.json();
   console.log(response);
 });
