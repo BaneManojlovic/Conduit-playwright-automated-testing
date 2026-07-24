@@ -1,18 +1,24 @@
 import { defineConfig, devices } from '@playwright/test';
-import { defineBddConfig } from 'playwright-bdd';
+// import { defineBddConfig } from 'playwright-bdd';
+import { defineBddProject } from 'playwright-bdd';
 
 // Configure paths for your BDD feature files and TypeScript steps
-const testDir = defineBddConfig({
-  features: 'features/ui/**/*.feature',
-  steps: 'steps/ui/**/*.ts',
-});
+// const testDir = defineBddConfig({
+//   features: 'features/ui/**/*.feature',
+//   steps: 'steps/ui/**/*.ts',
+// });
+
+// const apiTestDir = defineBddConfig({
+//   features: 'features/api/**/*.feature',
+//   steps: 'steps/api/**/*.ts',
+// });
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
   // Point testDir to the BDD compiler output directory automatically
-  testDir,
+  // testDir,
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -31,17 +37,17 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
-    {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
-    },
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+    defineBddProject({
+      name: 'ui',
+      features: 'features/ui/**/*.feature',
+      steps: 'steps/ui/**/*.ts',
+      use: { ...devices['Desktop Chrome'], baseURL: 'https://conduit.bondaracademy.com' }, 
+    }),
+    defineBddProject({
+      name: 'api',
+      features: 'features/api/**/*.feature',
+      steps: 'steps/api/**/*.ts',
+      use: { baseURL: 'https://conduit-api.bondaracademy.com' },
+    }),
   ],
 });
