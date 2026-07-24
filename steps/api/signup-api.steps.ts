@@ -6,13 +6,37 @@ const { Given, When, Then } = createBdd();
 
 let response: APIResponse;
 let responseBody: any;
+let username: string;
+let email: string;
 
 When('user signs up via API with valid credentials', async ({ request }) => {
   const apiClient = new AuthApiClient(request);
   const uniqueId = Date.now();
+  username = `baki${uniqueId}`;
+  email = `baki${uniqueId}@gmail.com`;
+  response = await apiClient.signUp(
+    username, 
+    email, 
+    'Test123!');
+  responseBody =  await response.json();
+});
+
+When('user signs up via API with credentials with repeated username', async ({ request }) => {
+  const apiClient = new AuthApiClient(request);
+  const uniqueId = Date.now();
+  response = await apiClient.signUp(
+    username, 
+    `baki${uniqueId}@gmail.com`, 
+    'Test123!');
+  responseBody =  await response.json();
+});
+
+When('user signs up via API with credentials with repeated email', async ({ request }) => {
+  const apiClient = new AuthApiClient(request);
+  const uniqueId = Date.now();
   response = await apiClient.signUp(
     `baki${uniqueId}`, 
-    `baki${uniqueId}@gmail.com`, 
+    email, 
     'Test123!');
   responseBody =  await response.json();
 });
@@ -86,6 +110,13 @@ When('user try to signs up via API with invalid password', async ({ request }) =
 });
 
 Then('the response contains error invalid password', async ({}) => {
-  console.log('Baki ====== ', responseBody.errors);
   expect(responseBody.errors.password[0]).toBe('is too short (minimum is 8 characters)');
+});
+
+Then('the response contains error username taken', async ({}) => {
+  expect(responseBody.errors.username[0]).toBe('has already been taken');
+});
+
+Then('the response contains error email taken', async ({}) => {
+  expect(responseBody.errors.email[0]).toBe('has already been taken');
 });
