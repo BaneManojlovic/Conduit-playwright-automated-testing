@@ -28,18 +28,18 @@ Scenario: Error returned for invalid username
     Then the response contains error invalid username message
 
 Scenario: Error returned for invalid email
-    Given
-    When
-    Then
+    When user try to signs up via API with invalid email
+    And the response status is 422
+    Then the response contains error invalid email message
 
 Scenario: Error returned for invalid password
-    Given
-    When
-    Then
+    When user try to signs up via API with invalid password
+    And the response status is 422
+    Then the response contains error invalid password
 
 Scenario: Sign up via API fails with already-used username
-    Given
     When
+    And
     Then
 
 
