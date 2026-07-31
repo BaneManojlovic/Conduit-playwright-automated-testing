@@ -4,7 +4,6 @@ import { PageManager } from '../../page-objects/pageManager';
 import { test } from '../../fixtures/testFixtures';
 
 
-
 const { Given, When, Then } = createBdd(test);
 
 let email: string;
@@ -40,30 +39,23 @@ When('user click sign in button', async({ page }) => {
 });
 
 
+When('user enter sign in credentials with invalid email', async({ page }) => {
+    const pageManager = new PageManager(page);
+    await pageManager.onSignInPage().fillInUserCredentials('x', 'Test123!');
+});
 
+When('user enter sign in credentials with invalid password', async({ page }) => {
+    const pageManager = new PageManager(page);
+await pageManager.onSignInPage().fillInUserCredentials('banetest@gmail.com', 'x');    
+});
 
+When('user enter sign in credentials with all invalid data', async({ page }) => {
+    const pageManager = new PageManager(page);
+await pageManager.onSignInPage().fillInUserCredentials('x', 'x');    
+});
 
-
-// Given('', async({}) => {
-
-// });
-
-// When('', async({}) => {
-
-// });
-
-// Then('', async({}) => {
-
-// });
-
-// Given('', async({}) => {
-
-// });
-
-// When('', async({}) => {
-
-// });
-
-// Then('', async({}) => {
-
-// });
+Then('error message about invalid credentials is shown', async({ page }) => {
+    const pageManager = new PageManager(page);
+    const errorMessage = await pageManager.onSignInPage().getErrorMessage();
+    expect(errorMessage[0]).toEqual('email or password is invalid');
+});

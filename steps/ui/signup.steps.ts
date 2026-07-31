@@ -110,10 +110,7 @@ Then('all three error messages are shown', async({ page }) => {
 When('user enters valid signup credentials', async({ page, newUser }) => {
     const pageManager = new PageManager(page);
     const uniqueId = Date.now();
-    // username = `user${uniqueId}`;
-    // email  = `user${uniqueId}@example.com`;
-    // testContext.username = username;
-
+  
     await pageManager.onSignUpPage().fillInUserCredentials(
         newUser.username, 
         newUser.email, 
