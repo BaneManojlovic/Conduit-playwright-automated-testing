@@ -1,8 +1,9 @@
 import { createBdd } from 'playwright-bdd';
 import { expect } from '@playwright/test';
 import { PageManager } from '../../page-objects/pageManager';
+import { test } from '../../fixtures/testFixtures';
 
-const { Given, When, Then } = createBdd();
+const { Given, When, Then } = createBdd(test);
 
 let username: string;
 let email: string;
@@ -10,7 +11,7 @@ let email: string;
 // Playwright Test Steps
 
 Given('user is on home page', async({ page }) => {
-    await page.goto('https://conduit.bondaracademy.com/');
+    await page.goto('/');
 });
 
 When('user click on Sign up text on navigation bar', async({ page }) => {
@@ -23,7 +24,7 @@ Then('user is redirected to Sign up page', async({ page }) => {
 });
 
 Given('user is on the Sign up page', async({ page }) => {
-    await page.goto('https://conduit.bondaracademy.com/register');
+    await page.goto('/register');
 });
 
 When('user click on the Have an account link', async({ page }) => {
@@ -106,19 +107,20 @@ Then('all three error messages are shown', async({ page }) => {
     expect(errorMessage[2]).toEqual('password is too short (minimum is 8 characters)');
 });
 
-When('user enters valid signup credentials', async({ page }) => {
+When('user enters valid signup credentials', async({ page, newUser }) => {
     const pageManager = new PageManager(page);
     const uniqueId = Date.now();
-    username = `user${uniqueId}`;
-    email  = `user${uniqueId}@example.com`;
+    // username = `user${uniqueId}`;
+    // email  = `user${uniqueId}@example.com`;
+    // testContext.username = username;
 
     await pageManager.onSignUpPage().fillInUserCredentials(
-        username, 
-        email, 
+        newUser.username, 
+        newUser.email, 
         'Test123!');
 });
 
-Then('user is redirected to home page and have username displayed', async({ page }) => {
+Then('user is redirected to home page and have username displayed', async({ page, newUser }) => {
     const pageManager = new PageManager(page);
-    await pageManager.onHeader().usernamePresent(username);
+    await pageManager.onHeader().usernamePresent(newUser.username);
 });

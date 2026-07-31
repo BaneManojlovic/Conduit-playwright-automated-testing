@@ -41,7 +41,7 @@ export default defineConfig({
     ...defineBddProject({
       name: 'ui',
       features: 'features/ui/**/*.feature',
-      steps: 'steps/ui/**/*.ts',
+      steps: ['steps/ui/**/*.ts', 'fixtures/testFixtures.ts'],
     }),
     use: { ...devices['Desktop Chrome'], baseURL: 'https://conduit.bondaracademy.com' }, 
   },
@@ -49,7 +49,7 @@ export default defineConfig({
     ...defineBddProject({
       name: 'api',
       features: 'features/api/**/*.feature',
-      steps: 'steps/api/**/*.ts'
+      steps: ['steps/api/**/*.ts', 'fixtures/testFixtures.ts']
     }),
     use: { baseURL: 'https://conduit-api.bondaracademy.com' },
   }
