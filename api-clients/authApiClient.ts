@@ -17,7 +17,7 @@ export class AuthApiClient {
   // }
 
   async signUp(user: User) {
-  return this.request.post('https://conduit-api.bondaracademy.com/api/users', { 
+  return this.request.post('/api/users', { 
     data: { user } 
   });
 }

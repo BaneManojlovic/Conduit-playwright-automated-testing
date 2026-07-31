@@ -1,33 +1,30 @@
 import { Page } from '@playwright/test'
 
-export class SignUpPage {
+export class SignInPage {
 
     private readonly page: Page;
-    readonly usernameInputField;
     readonly emailInputField;
     readonly passwordInputField;
-    readonly signUpButton;
+    readonly signInButton;
     readonly errorMessageItem;
 
-    constructor(page: Page){
+    constructor(page: Page) {
         this.page = page;
-        this.usernameInputField = page.getByRole('textbox', { name: 'Username' });
         this.emailInputField = page.getByRole('textbox', { name: 'Email' });
         this.passwordInputField = page.getByRole('textbox', { name: 'Password' });
-        this.signUpButton = page.getByRole('button', { name: 'Sign up' });
+        this.signInButton = page.getByRole('button', { name: 'Sign in' });
         this.errorMessageItem = page.locator('app-list-errors').getByRole('listitem');
     }
 
-    async goToSignUpPage() {
-        await this.page.goto('/register');
+    async goToSignInPage() {
+        await this.page.goto('/login');
     }
 
     async submit() {
-        await this.signUpButton.click();
+        await this.signInButton.click();
     }
 
-    async fillInUserCredentials(username: string, email: string, password: string) {
-        await this.usernameInputField.fill(username);
+     async fillInUserCredentials(email: string, password: string) {
         await this.emailInputField.fill(email);
         await this.passwordInputField.fill(password);
     }
@@ -36,5 +33,4 @@ export class SignUpPage {
         await this.errorMessageItem.first().waitFor({ state: 'visible' });
         return this.errorMessageItem.allTextContents();
     }
-
 }

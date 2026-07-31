@@ -1,4 +1,4 @@
-Feature: New user Sign up
+Feature: New user Sign up UI testing
 
 # Gherkin instructions - features
 
