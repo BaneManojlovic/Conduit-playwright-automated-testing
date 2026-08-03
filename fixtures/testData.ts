@@ -14,3 +14,9 @@ export function uniqueUser(): User {
         password:  'Test123!'
     };
 }
+
+export const existingUser: User = {
+    username: 'BaneTest',
+    email: 'banetest@gmail.com',
+    password: 'Test123!'
+};

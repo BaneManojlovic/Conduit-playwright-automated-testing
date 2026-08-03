@@ -2,6 +2,7 @@ import { Page } from '@playwright/test';
 import { SignUpPage } from './signUpPage';
 import { HeaderComponent } from './headerComponent';
 import { SignInPage } from './signInPage';
+import { ProfilePage } from './profilePage';
 
 export class PageManager {
 
@@ -9,12 +10,14 @@ export class PageManager {
     private readonly signUpPage: SignUpPage;
     private readonly headerComponent: HeaderComponent;
     private readonly signInPage: SignInPage;
+    private readonly profilePage: ProfilePage;
 
     constructor(page: Page) {
         this.page = page;
         this.signUpPage = new SignUpPage(this.page);
         this.headerComponent = new HeaderComponent(this.page);
         this.signInPage = new SignInPage(this.page);
+        this.profilePage = new ProfilePage(this.page);
     }
 
     onSignUpPage() {
@@ -27,5 +30,9 @@ export class PageManager {
 
     onSignInPage() {
         return this.signInPage
+    }
+
+    onProfilePage() {
+        return this.profilePage
     }
 }

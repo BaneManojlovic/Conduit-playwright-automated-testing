@@ -4,16 +4,26 @@ Feature: User Profile page UI testing
 
 Background:
     Given user is on home page
+    And user is logged in and have username displayed
 
 Scenario: User opens profile page
+    When user click on username link on navigation bar
+    Then user is redirected to Profile page
 
-Scenario: User enters to edit your settings
-
-Scenario: User successfully edited profile
-
-
-Scenario: User see error message in case of invalid username
-
-Scenario: User see error message in case of already existing username
+Scenario: User enters to edit profile settings
+    When user click on username link on navigation bar
+    And user click on Edit Profile Settings button
+    Then user is redirected to Settings page
 
 Scenario: User logouted successfully from your settings screen
+    When user click on username link on navigation bar      
+    And user click on Edit Profile Settings button
+    When user is currently redirected to Settings page
+    And user click on logout button
+    Then user is redirected to Home page and have no username displayed
+
+# Scenario: User successfully edited profile
+
+# Scenario: User see error message in case of invalid username
+
+# Scenario: User see error message in case of already existing username
