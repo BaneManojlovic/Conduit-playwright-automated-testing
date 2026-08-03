@@ -1,5 +1,7 @@
 Feature: User Profile page UI testing
 
+# Gherkin instructions - features
+
 Background:
     Given user is on home page
 
