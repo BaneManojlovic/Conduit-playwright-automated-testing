@@ -33,4 +33,10 @@ export class SignInPage {
         await this.errorMessageItem.first().waitFor({ state: 'visible' });
         return this.errorMessageItem.allTextContents();
     }
+
+    async login(email: string, password: string) {
+        await this.goToSignInPage();
+        await this.fillInUserCredentials(email, password);
+        await this.submit();
+    }
 }

@@ -12,4 +12,9 @@ export class HeaderComponent {
         const profileLink = this.page.getByRole('link', { name: username });
         await expect(profileLink).toBeVisible();
     }
+
+    async signInPresent() {
+        const signInLink = this.page.getByRole('link', { name: 'Sign in'});
+        await expect(signInLink).toBeVisible();
+    }
 }
