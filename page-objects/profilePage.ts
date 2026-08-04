@@ -4,16 +4,10 @@ export class ProfilePage {
 
     private readonly page: Page;
     readonly editProfileSettingsButton;
-    readonly logoutButton;
-
+    
     constructor(page: Page) {
         this.page = page;
         this.editProfileSettingsButton = page.getByRole('link', {name: 'Edit Profile Settings'})
-        this.logoutButton = page.getByRole('button', {name: 'Or click here to logout'});
-    }
-
-    async goToEditProfileSettingsPage() {
-        await this.page.goto('/settings');
     }
 
     async usernameHeadingVisible(username: string) {
@@ -24,7 +18,11 @@ export class ProfilePage {
         await this.editProfileSettingsButton.click();
     }
 
-    async clickOnLogout() {
-        await this.logoutButton.click();
+    async biographyTextVisible(text: string) {
+        await expect(this.page.getByRole('heading', {name: text})).toBeVisible();
+    }
+
+    async bioTextVisible(text: string) {
+        await expect(this.page.getByText(text)).toBeVisible();
     }
 }

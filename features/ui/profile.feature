@@ -22,8 +22,11 @@ Scenario: User logouted successfully from your settings screen
     And user click on logout button
     Then user is redirected to Home page and have no username displayed
 
-# Scenario: User successfully edited profile
-
-# Scenario: User see error message in case of invalid username
-
-# Scenario: User see error message in case of already existing username
+Scenario: User successfully edited profile
+    When user click on username link on navigation bar      
+    And user click on Edit Profile Settings button
+    When user is currently redirected to Settings page
+    And user edited bigraphy input field
+    When user click on update settings button
+    And user is redirected to Profile page
+    Then user see updated bio text on the Profile page

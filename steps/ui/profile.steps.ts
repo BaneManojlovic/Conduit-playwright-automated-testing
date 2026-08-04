@@ -3,10 +3,10 @@ import { expect } from '@playwright/test';
 import { PageManager } from '../../page-objects/pageManager';
 import { test } from '../../fixtures/testFixtures';
 import { existingUser } from '../../fixtures/testData';
-import { PassThrough } from 'node:stream';
 
 const { Given, When, Then } = createBdd(test);
 
+let textForEditingBigraphy: string;
 
 // Playwright Test Steps
 
@@ -41,7 +41,7 @@ When('user is currently redirected to Settings page', async({ page }) => {
 
 When('user click on logout button', async({ page }) => {
     const pageManager = new PageManager(page);
-    await pageManager.onProfilePage().clickOnLogout();
+    await pageManager.onSettingsPage().clickOnLogout();
 });
 
 Then('user is redirected to Home page and have no username displayed', async({ page }) => {
@@ -49,3 +49,18 @@ Then('user is redirected to Home page and have no username displayed', async({ p
     await pageManager.onHeader().signInPresent();
 });
 
+When('user edited bigraphy input field', async({ page }) => {
+    const pageManager = new PageManager(page);
+    textForEditingBigraphy = 'Biography text for testing.';
+    await pageManager.onSettingsPage().fillInBiographyDetails(textForEditingBigraphy);
+});
+
+When('user click on update settings button', async({ page }) => {
+    const pageManager = new PageManager(page);
+    await pageManager.onSettingsPage().clickOnUpdateSettingsButton();
+});
+
+Then('user see updated bio text on the Profile page', async({ page }) => {
+    const pageManager = new PageManager(page);
+    await pageManager.onProfilePage().bioTextVisible(textForEditingBigraphy);
+});
